@@ -1,0 +1,9 @@
+Discord:
+  token:
+  ## 指定方法: roles: [0123456789,9876543210]
+  ## 取得の方法は調べてください。
+  roles: []
+Minecraft:
+  # 指定方法: groups: [group.test1,group.test2]
+  # group.の部分は固定。
+  groups: []

@@ -1,0 +1,10 @@
+name: Discord_Luckperms
+version: '${project.version}'
+main: plugin.filled_sky24811.info.discord_luckperms.Discord_Luckperms
+api-version: '1.20'
+default-permission: op
+depend: [LuckPerms]
+commands:
+  link:
+    description: '[AdminOnly]Discord-Minecraft'
+    permission: Discord_Luckperms.link
