@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +26,7 @@ public class async {
         if(checker == 32767) return;
 
         List<String> settingRoles = plugin.getDiscordRoles();
-        File directory = plugin.getDataFolder();
+        File directory = new File(plugin.getDataFolder(),"LinkedMembers");
         String searchText = targetUUID.toString();
         File targetFile = searchFiles(directory, searchText);
         if(targetFile == null) return;
@@ -50,7 +49,7 @@ public class async {
         if(checker == 32767) return;
 
         List<String> settingRoles = plugin.getDiscordRoles();
-        File directory = plugin.getDataFolder();
+        File directory = new File(plugin.getDataFolder(),"LinkedMembers");
         String searchText = targetUUID.toString();
         File targetFile = searchFiles(directory, searchText);
         if(targetFile == null) return;
@@ -106,7 +105,6 @@ public class async {
         try {
             // ファイルの中身を文字列として読み込む
             String content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-            Bukkit.getLogger().info("ファイルの中身確認までは動いてるのよん");
             return content.contains(searchText);
         } catch (IOException e) {
             e.printStackTrace();

@@ -18,7 +18,6 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class link implements CommandExecutor {
     private final Discord_Luckperms plugin;
@@ -86,4 +85,5 @@ public class link implements CommandExecutor {
             e.printStackTrace();
         }
     }
+
 }
