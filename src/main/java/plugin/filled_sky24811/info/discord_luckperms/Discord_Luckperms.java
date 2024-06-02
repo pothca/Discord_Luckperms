@@ -116,6 +116,7 @@ public final class Discord_Luckperms extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if(jda != null) jda.shutdown();
         Bukkit.getLogger().info("プラグインが無効化されました！");
     }
 

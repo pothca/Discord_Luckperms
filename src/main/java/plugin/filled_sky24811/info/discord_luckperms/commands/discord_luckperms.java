@@ -1,6 +1,7 @@
 package plugin.filled_sky24811.info.discord_luckperms.commands;
 
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import org.bukkit.ChatColor;
@@ -45,7 +46,8 @@ public class discord_luckperms implements CommandExecutor {
                         String Smember = String.valueOf(member);
                         String Srole = String.valueOf(role);
                         try {
-                            async.discord_minecraftRemove(Smember, Srole);
+                            Guild guild = jda.getGuildById(plugin.getGuildId());
+                            if(member.getRoles().equals(role)) guild.removeRoleFromMember(member, role);
                             async.discord_minecraftAdd(Smember, Srole);
                         } catch (IOException e) {
                             throw new RuntimeException(e);

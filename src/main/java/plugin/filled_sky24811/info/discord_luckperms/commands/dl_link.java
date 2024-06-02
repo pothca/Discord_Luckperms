@@ -41,6 +41,10 @@ public class dl_link implements CommandExecutor {
             return true;
         }
         String discordID = strings[0];
+        if (discordID == null){
+            commandSender.sendMessage("ユーザーIDを入力してください");
+            return true;
+        }
         Guild guild = jda.getGuildById(plugin.getGuildId());
         if (guild == null) {
             commandSender.sendMessage("ボットが参加しているサーバーが見つかりませんでした");
