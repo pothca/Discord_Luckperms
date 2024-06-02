@@ -12,22 +12,27 @@ import java.util.UUID;
 public class MEventListener extends ListenerAdapter {
     private final Discord_Luckperms plugin;
     private final async async;
-    public MEventListener(Discord_Luckperms plugin, async async){
+
+    public MEventListener(Discord_Luckperms plugin, async async) {
         this.plugin = plugin;
         this.async = async;
     }
 
-    public void onGroupAdd(NodeAddEvent event){
-        User user = (User) event.getTarget();
-        UUID uuid = user.getUniqueId();
-        String node = event.getNode().getKey();
-        async.minecraft_discordAdd(uuid, node);
+    public void onGroupAdd(NodeAddEvent event) {
+        if (event.getTarget() instanceof User) {
+            User user = (User) event.getTarget();
+            UUID uuid = user.getUniqueId();
+            String node = event.getNode().getKey();
+            async.minecraft_discordAdd(uuid, node);
+        }
     }
 
-    public void onGroupRemove(NodeRemoveEvent event){
-        User user = (User) event.getTarget();
-        UUID uuid = user.getUniqueId();
-        String node = event.getNode().getKey();
-        async.minecraft_discordRemove(uuid, node);
+    public void onGroupRemove(NodeRemoveEvent event) {
+        if (event.getTarget() instanceof User) {
+            User user = (User) event.getTarget();
+            UUID uuid = user.getUniqueId();
+            String node = event.getNode().getKey();
+            async.minecraft_discordRemove(uuid, node);
+        }
     }
 }
