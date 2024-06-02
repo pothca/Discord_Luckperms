@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import plugin.filled_sky24811.info.discord_luckperms.Discord.BotReady;
 import plugin.filled_sky24811.info.discord_luckperms.Discord.DEventListener;
 import plugin.filled_sky24811.info.discord_luckperms.Discord.DMReceive;
+import plugin.filled_sky24811.info.discord_luckperms.commands.TabCompleter;
 import plugin.filled_sky24811.info.discord_luckperms.commands.discord_luckperms;
 import plugin.filled_sky24811.info.discord_luckperms.commands.dl_link;
 import plugin.filled_sky24811.info.discord_luckperms.minecraft.MEventListener;
@@ -105,9 +106,10 @@ public final class Discord_Luckperms extends JavaPlugin {
 
         // コマンドの登録
         dl_link dl_link = new dl_link(this, jda);
-        discord_luckperms discord_luckperms = new discord_luckperms(this);
+        discord_luckperms discord_luckperms = new discord_luckperms(this, jda, async);
         getCommand("dl_link").setExecutor(dl_link);
         getCommand("discord_luckperms").setExecutor(discord_luckperms);
+        getCommand("discord_luckperms").setTabCompleter(new TabCompleter());
 
         DMReceive DMReceive = new DMReceive(this);
     }
