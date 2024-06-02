@@ -19,13 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class link implements CommandExecutor {
+public class dl_link implements CommandExecutor {
     private final Discord_Luckperms plugin;
     private final JDA jda;
     private final SecureRandom random = new SecureRandom();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public link(Discord_Luckperms plugin, JDA jda){
+    public dl_link(Discord_Luckperms plugin, JDA jda){
         this.plugin = plugin;
         this.jda = jda;
     }
@@ -49,8 +49,6 @@ public class link implements CommandExecutor {
 
         // メンバーの存在チェックを修正
         Member member = guild.getMemberById(discordID);
-        Bukkit.getLogger().info("1141724987628212314");
-        Bukkit.getLogger().info(discordID);
         Bukkit.getLogger().info(String.valueOf(member));
         if (member == null) {
             commandSender.sendMessage("指定された Discord ID はこのサーバーに存在しません。正しい Discord ID を入力してください。");

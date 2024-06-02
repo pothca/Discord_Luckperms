@@ -1,5 +1,6 @@
 package plugin.filled_sky24811.info.discord_luckperms.Discord;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.dv8tion.jda.api.entities.Message;
@@ -8,13 +9,10 @@ import net.dv8tion.jda.api.entities.channel.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import plugin.filled_sky24811.info.discord_luckperms.Discord_Luckperms;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class DMReceive extends ListenerAdapter {
     private final Discord_Luckperms plugin;
@@ -45,12 +43,13 @@ public class DMReceive extends ListenerAdapter {
                     String verificationCode = jsonObject.get("verificationCode").asText();
                     if (verificationCode.equals(content)) {
                         // 連携用コードが一致した場合の処理
-                        File directory = new File(plugin.getDataFolder(),"DiscordIDs");
+                        File directory = new File(plugin.getDataFolder(), "LinkedMembers");
                         String searchText = jsonObject.get("MinecraftUUID").asText();
-                        File return_File = searchFiles(directory,searchText);
-                        if(return_File != null){
+                        File return_File = searchFiles(directory, searchText);
+                        if (return_File != null) {
                             user.openPrivateChannel()
-                                    .flatMap(channel -> channel.sendMessage("あなたはもう登録しています"));
+                                    .flatMap(privateChannel -> privateChannel.sendMessage("あなたはもう登録しています"))
+                                    .queue();
                             return;
                         }
                         String discordID = user.getId();
@@ -68,7 +67,9 @@ public class DMReceive extends ListenerAdapter {
                         File linkedFile = new File(linkedFolder, discordID + ".json");
                         mapper.writeValue(linkedFile, node);
 
-                        Bukkit.getLogger().info("連携用コードが一致しました。");
+                        user.openPrivateChannel()
+                                .flatMap(privateChannel -> privateChannel.sendMessage(discordID + "は" + minecraftUUID + "とリンクしました。"))
+                                .queue();
                         return;
                     }
                 } catch (IOException e) {
@@ -103,13 +104,16 @@ public class DMReceive extends ListenerAdapter {
 
     private boolean searchTextInFile(File file, String searchText) {
         try {
-            // ファイルの中身を文字列として読み込む
-            String content = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
-            Bukkit.getLogger().info("ファイルの中身確認までは動いてるのよん");
-            return content.contains(searchText);
+            // ファイルの中身をJSONとして読み込む
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(file);
+            JsonNode minecraftUUIDNode = jsonNode.get("MinecraftUUID");
+            if (minecraftUUIDNode != null) {
+                return minecraftUUIDNode.asText().equals(searchText);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
+        return false;
     }
 }

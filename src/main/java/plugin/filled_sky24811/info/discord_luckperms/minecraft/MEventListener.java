@@ -1,5 +1,6 @@
 package plugin.filled_sky24811.info.discord_luckperms.minecraft;
 
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.luckperms.api.event.node.NodeAddEvent;
 import net.luckperms.api.event.node.NodeRemoveEvent;
 import net.luckperms.api.model.user.User;
@@ -8,7 +9,7 @@ import plugin.filled_sky24811.info.discord_luckperms.async;
 
 import java.util.UUID;
 
-public class MEventListener {
+public class MEventListener extends ListenerAdapter {
     private final Discord_Luckperms plugin;
     private final async async;
     public MEventListener(Discord_Luckperms plugin, async async){
