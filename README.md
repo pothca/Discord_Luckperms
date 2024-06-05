@@ -1,4 +1,5 @@
 # Discord_Luckperms
+# ■このプラグインはまだ正式リリースを行っていません！■
 
 ### ★This plugin is supported Japanese only!★
 
